@@ -2,7 +2,7 @@ import './Menu3.css';
 import React from 'react';
 
 const Menu3 = () => {
-  return (
+  return ( 
 
     <div className="menu3-container">
       <div className="menu3-left">

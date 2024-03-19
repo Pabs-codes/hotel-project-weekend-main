@@ -1,7 +1,7 @@
 import React from 'react';
 import './Menu.css';
 
-
+ 
 const Menu = () => {
   // Define the menu data
   const menus = [

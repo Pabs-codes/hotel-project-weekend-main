@@ -1,7 +1,5 @@
 import React from "react";
-import Heading from "../common/Heading";
-import { about } from "../data/Data";
-import { Link } from "react-router-dom";
+
 
 // import image1 from "../../../public/assets/img/four1.png"
 
@@ -64,6 +62,7 @@ export default function About() {
                 </div>
                 <div className="col-6 text-start">
                   <img
+                       alt="fourim"
                     className="img-fluid  w-100 wow zoomIn"
                     data-wow-delay="0.3s"
                     src="../assets/img/four2.png"
@@ -72,6 +71,7 @@ export default function About() {
                 </div>
                 <div className="col-6 text-end">
                   <img
+                       alt="fourim"
                     className="img-fluid  w-50 wow zoomIn"
                     data-wow-delay="0.5s"
                     src="../assets/img/four3.png"
@@ -80,6 +80,7 @@ export default function About() {
                 </div>
                 <div className="col-6 text-start">
                   <img
+                       alt="fourim"
                     className="img-fluid  w-75 wow zoomIn"
                     data-wow-delay="0.7s"
                     src="../assets/img/four4.png"

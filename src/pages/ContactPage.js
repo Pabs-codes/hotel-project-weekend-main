@@ -2,11 +2,10 @@ import React from "react";
 import Heading from "../components/common/Heading";
 import CommonHeading from "../components/common/CommonHeading";
 import { contact } from "../components/data/Data";
-import FB from "../components/common/Gallery/FB";
 import EmptyDiv from "../components/home/emtydiv";
 
 export default function Contact() {
-  return (
+  return ( 
     <>
       <Heading heading="Contact" title="Home" subtitle="Contact" />
 
@@ -35,6 +34,7 @@ export default function Contact() {
             </div>
             <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
               <iframe
+              title="Map"
                 className="position-relative rounded w-100 h-100"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.7750593728394!2d81.69561980000001!3d7.715979799999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3afacd46651d85b7%3A0x9579901ce719af03!2sSunshine%20Grand%20Wedding%20Hall!5e0!3m2!1sen!2slk!4v1647492780087!5m2!1sen!2slk"
                 frameborder="0"

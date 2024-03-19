@@ -5,7 +5,7 @@ export default function PageNotFound() {
   return (
     <>
       <Heading
-        heading="Page Not Found"
+        heading="Page Not Found" 
         title="Home"
         subtitle="Page Not Found"
       />

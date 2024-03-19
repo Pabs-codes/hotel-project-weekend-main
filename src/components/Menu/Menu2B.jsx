@@ -1,7 +1,7 @@
 import React from 'react';
 import './Menu2.css';
 
-const Menu2B = () => {
+const Menu2B = () => { 
   // Define the menu data
   const menus = [
     {

@@ -4,7 +4,7 @@ const Menutop = () => {
   return (
     <div style={{ textAlign: 'center' }}>
       <h1>Standard Menu (Dinner) </h1>
-    </div>
+    </div> 
   );
 };
 

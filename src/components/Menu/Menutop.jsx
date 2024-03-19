@@ -5,7 +5,7 @@ const Menutop = () => {
     <div style={{ textAlign: 'center' }}>
       <h1>Budget Menu</h1>
     </div>
-  );
+  ); 
 };
 
 export default Menutop;

@@ -3,7 +3,7 @@
     flex-wrap: wrap; /* Allow menus to wrap on smaller screens */
   }
   
-  .menu3-left,
+  .menu3-left, 
   .menu3-right {
     width: 45%;
     padding: 20px;
