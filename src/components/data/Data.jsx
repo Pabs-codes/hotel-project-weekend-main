@@ -21,25 +21,25 @@ export const navList = [
   },
   {
     id: 5,
-    path: "/page",
+    path: "/booking",
     text: "Online Reservation",
-    subItems: [
-      {
-        id: 51,
-        path: "/booking",
-        text: "Booking Option 1",
-      },
-      {
-        id: 52,
-        path: "/booking",
-        text: "Booking Option 2",
-      },
-      {
-        id: 53,
-        path: "/booking",
-        text: "Booking Option 3",
-      },
-    ],
+    // subItems: [
+    //   {
+    //     id: 51,
+    //     path: "/booking",
+    //     text: "Booking Option 1",
+    //   },
+    //   {
+    //     id: 52,
+    //     path: "/booking",
+    //     text: "Booking Option 2",
+    //   },
+    //   {
+    //     id: 53,
+    //     path: "/booking",
+    //     text: "Booking Option 3",
+    //   },
+    // ],
   },
   {
     id: 6,

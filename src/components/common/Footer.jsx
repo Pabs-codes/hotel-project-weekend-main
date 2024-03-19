@@ -131,7 +131,7 @@ function Footer() {
 
         <div className="sb-footer-below">
           <div className="sb-footer-copyright">
-            <p>© Copyright 2024. Sunshine-Grand | All Rights Powered by ITMARTX</p>
+            <p>© Copyright 2024. Sunshine-Grand | All Rights Reserved. Powered by ITMARTX</p>
           </div>
           <div className="sb-footer-below-links">
             <a className="aclass" href="/term">

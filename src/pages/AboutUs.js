@@ -4,6 +4,7 @@ import About from "../components/home/AboutC";
 import Team from "../components/home/Team";
 import UC from "../components/common/UC";
 import FB from "../components/common/Gallery/FB";
+import EmptyDiv from "../components/home/emtydiv";
 
 
 export default function AboutUs() {
@@ -13,6 +14,7 @@ export default function AboutUs() {
       <About />
       {/* <Team /> */}
     {/* <FB/> */}
+    <EmptyDiv/>
     </>
   );
 }

@@ -10,6 +10,7 @@ import UC from "../common/UC";
 import Gallery from "../common/Gallery/Gallery";
 import FB from "../common/Gallery/FB";
 import EventList from "./EventList";
+import EmptyDiv from "./emtydiv";
 
 export default function Home() {
   return (
@@ -24,7 +25,8 @@ export default function Home() {
       {/* <UC/> */}
       {/* <Sliders /> */}
       <Gallery />
-      <FB />
+      <EmptyDiv/>
+      {/* <FB /> */}
       {/* <Teams /> */}
     </>
   );

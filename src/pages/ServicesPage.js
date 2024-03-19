@@ -12,6 +12,7 @@ import Menutop2B from "../components/Menu/Menutop2B";
 import Menu2 from "../components/Menu/Menu2";
 // import Menu3 from "../components/Menu/Menu3";
 import Menu2B from "../components/Menu/Menu2B";
+import EmptyDiv from "../components/home/emtydiv";
 
 
 export default function Service() {
@@ -25,6 +26,7 @@ export default function Service() {
       <Menu2/>
       <Menutop2B/>
       <Menu2B/>
+      <EmptyDiv/>
       {/* <UC/> */}
       {/* <Sliders /> */}
     </>
