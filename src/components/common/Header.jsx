@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { navList } from "../data/Data";
 import SocialIcons from "./SocialIcons";
-import logo from "./ImagesP/sunshine.png";
+import logo from "./ImagesP/sunshine.jpg";
 
 const colors = ["orange", "white", "orange"]; // Add more colors as needed
 

@@ -104,7 +104,7 @@ export default function Contact() {
           </div>
         </div>
         <EmptyDiv />
-        <FB />
+        {/* <FB /> */}
       </div>
     </>
   );

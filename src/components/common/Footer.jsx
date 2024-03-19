@@ -115,7 +115,7 @@ function Footer() {
                     </a>
                 </p>
                 <p>
-                    <a href="https://wa.me/94776966706" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/+94761064604" target="_blank" rel="noopener noreferrer">
                         <img  src={WA} alt="WhatsApp" />
                     </a>
                 </p>
