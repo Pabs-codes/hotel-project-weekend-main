@@ -3,13 +3,16 @@
 .booking-form {
     max-width: 1200px;
     margin: 0 auto;
+    margin-bottom: 150px;
     padding: 50px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    border: none; /* Remove border */
+    border-radius: 15px; /* Add border-radius for glass effect */
+    background: linear-gradient(to bottom right, rgb(227, 155, 0), rgb(7, 7, 7)); /* Glass effect background gradient */
     display: flex;
     flex-wrap: wrap; /* Allow items to wrap to the next line */
     gap: 50px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); 
+    background-image: url("../components/home/batt.png");
   }
   
   .left-div,
@@ -25,8 +28,10 @@
   
   .form-group label {
     display: block;
+    color: #fff;
+    font-family:sans-serif;
     margin-bottom: 5px;
-    font-weight: bold;
+    /* font-weight: bold; */
   }
   
   input[type="text"],
@@ -37,9 +42,11 @@
   textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: none; /* Remove border */
+    border-radius: 8px; /* Add border-radius */
     box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.6); /* Light glass effect background */
+    color: #000; /* Black text color */
   }
   
   textarea {
@@ -48,11 +55,13 @@
   
   button[type="submit"] {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #e09710;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 12px;
+    padding-left: 20px;
     cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add button shadow */
   }
   
   button[type="submit"]:hover {
@@ -60,6 +69,10 @@
   }
   
   @media screen and (max-width: 768px) {
+    .booking-form {
+       
+        border-radius: 1px;
+    }
     .left-div,
     .right-div {
       flex: 100%; /* Make them take full width on smaller screens */

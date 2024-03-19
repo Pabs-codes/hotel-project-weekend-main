@@ -13,8 +13,10 @@
 
 import React, { useState } from "react";
 import Heading from "../components/common/Heading";
-import UC from "../components/common/UC";
 import "./Form.css"; // Import the CSS file
+
+import { motion } from "framer-motion";
+
 
 export default function Booking() {
   const [formData, setFormData] = useState({
@@ -77,34 +79,89 @@ export default function Booking() {
   return (
     <>
       <Heading heading="Booking" title="Home" subtitle="Booking" />
-      <div className="booking-form">
-        <div className="left-div">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
+      <motion.div
+        className="booking-form"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+         <motion.div
+          className="left-div"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+         <motion.form
+            onSubmit={handleSubmit}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+              <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Name</label>
               <input type="text" name="name" value={formData.name} onChange={handleChange} />
-            </div>
-            <div className="form-group">
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Company Name</label>
               <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} />
-            </div>
-            <div className="form-group">
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Phone</label>
               <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
-            </div>
-            <div className="form-group">
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Email</label>
               <input type="email" name="email" value={formData.email} onChange={handleChange} />
-            </div>
-            <div className="form-group">
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Event Date</label>
               <input type="date" name="eventDate" value={formData.eventDate} onChange={handleChange} />
-            </div>
-          </form>
-        </div>
-        <div className="right-div">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
+            </motion.div>
+          </motion.form>
+        </motion.div>
+        <motion.div
+          className="right-div"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+       <motion.form
+            onSubmit={handleSubmit}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+              <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Event Type</label>
               <select name="eventType" value={formData.eventType} onChange={handleChange}>
                 <option value="">Select</option>
@@ -113,24 +170,47 @@ export default function Booking() {
                 <option value="ceremony">Ceremony</option>
                 <option value="other">Other</option>
               </select>
-            </div>
-            <div className="form-group">
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Event Start Time</label>
               <input type="time" name="eventStartTime" value={formData.eventStartTime} onChange={handleChange} />
-            </div>
-            <div className="form-group">
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Number of People</label>
               <input type="number" name="numberOfPeople" value={formData.numberOfPeople} onChange={handleChange} />
-            </div>
-            <div className="form-group">
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Equipment Required/Remarks</label>
               <textarea name="equipmentRequired" value={formData.equipmentRequired} onChange={handleChange}></textarea>
-            </div>
-            <button type="submit">Submit</button>
-          </form>
-        </div>
-      </div>
-      <UC />
+            </motion.div>
+            <motion.button
+              type="submit"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+            >
+              Submit
+            </motion.button>
+          </motion.form>
+        </motion.div>
+      </motion.div>
+
+   
     </>
   );
 }
