@@ -41,7 +41,7 @@ const Gallery = () => {
         <img
           key={index}
           src={image}
-          alt={`Image ${index + 1}`}
+          alt={`Galleryview ${index + 1}`}
           className="gallery-image"
           onClick={() => handleClick(image)}
         />
@@ -50,7 +50,7 @@ const Gallery = () => {
         <div className="overlay" onClick={() => setSelectedImage(null)}>
           <img
             src={selectedImage}
-            alt="Selected"
+            alt="Selectedimage"
             className="overlay-image"
           />
         </div>
