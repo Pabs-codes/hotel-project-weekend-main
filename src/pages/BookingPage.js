@@ -37,10 +37,41 @@ export default function Booking() {
     });
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // You can handle form submission logic here
+  //   console.log(formData);
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can handle form submission logic here
-    console.log(formData);
+  
+    fetch('http://localhost:5000/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+      // Optionally, you can reset the form data here
+      setFormData({
+        name: "",
+        companyName: "",
+        phone: "",
+        email: "",
+        eventDate: "",
+        eventType: "",
+        eventStartTime: "",
+        numberOfPeople: "",
+        equipmentRequired: ""
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   };
 
   return (

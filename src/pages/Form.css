@@ -1,24 +1,26 @@
 /* BookingForm.css */
 
 .booking-form {
-  max-width: 1200px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 50px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
     display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
     gap: 50px;
   }
   
   .left-div,
   .right-div {
     flex: 1;
-  
+    margin-bottom: 20px; /* Add space between left and right div */
   }
   
   .form-group {
     margin-bottom: 20px;
+    width: 100%; /* Take full width */
   }
   
   .form-group label {
@@ -55,5 +57,12 @@
   
   button[type="submit"]:hover {
     background-color: #0056b3;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .left-div,
+    .right-div {
+      flex: 100%; /* Make them take full width on smaller screens */
+    }
   }
   
