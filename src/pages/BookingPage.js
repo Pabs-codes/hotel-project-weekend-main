@@ -164,11 +164,25 @@ export default function Booking() {
             >
               <label>Event Type</label>
               <select name="eventType" value={formData.eventType} onChange={handleChange}>
-                <option value="">Select</option>
                 <option value="wedding">Wedding</option>
+                <option value="gettogether">Get-Together</option>
                 <option value="birthday">Birthday</option>
                 <option value="ceremony">Ceremony</option>
                 <option value="other">Other</option>
+              </select>
+            </motion.div>
+
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <label>Meal Type</label>
+              <select name="eventType" value={formData.eventType} onChange={handleChange}>
+                <option value="wedding">Lunch</option>
+                <option value="gettogether">Dinner</option>
+              
               </select>
             </motion.div>
             <motion.div
