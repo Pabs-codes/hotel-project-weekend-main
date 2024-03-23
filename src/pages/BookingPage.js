@@ -11,7 +11,7 @@
 //   );
 // }
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "../components/common/Heading";
 import "./Form.css"; // Import the CSS file
 
@@ -19,6 +19,9 @@ import { motion } from "framer-motion";
 
 
 export default function Booking() {
+  const [formValid, setFormValid] = useState(false); // This is the form validation state
+  const [availability, setAvailability] = useState(false); // This is the availability state
+  const [message, setMessage] = useState({type:'',text:''}); // This is the message from the server
   const [formData, setFormData] = useState({
     name: "",
     companyName: "",
@@ -33,11 +36,41 @@ export default function Booking() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(state=>({
+      ...state,
       [name]: value
+    }));
+    name==='eventDate' && checkAvailability(value);
+  };
+  
+  useEffect(() => {
+    checkForm();
+  }, [formData,availability]);
+
+
+  const checkAvailability = async (value) => {
+    await fetch(`http://localhost:8000/reservation/availability?date=${value}`)
+    .then(response => {
+      const type = response.status===200?'success':'error';
+      setAvailability(response.status===200);
+      response.json().then(data=>{
+        setMessage({type,text:data.message})
+      })
     });
-  }; 
+  }
+
+  const checkForm =  () => {
+    setFormValid(
+      (formData.name !== '' &&
+      formData.phone !== '' &&
+      formData.email !== '' && formData.email.includes('@') && formData.email.includes('.') &&
+      formData.eventDate !== ''&&
+      formData.eventType !== '' &&
+      formData.eventStartTime !== '' &&
+      formData.numberOfPeople > 0 &&
+      availability)
+    )
+  }
  
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -48,33 +81,33 @@ export default function Booking() {
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    fetch('http://localhost:5000/submit', {
+    fetch('http://localhost:8000/reservation', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
     })
-    .then(response => response.text())
-    .then(data => {
-      console.log(data);
-      // Optionally, you can reset the form data here
-      setFormData({
+    .then(response => {
+      const type = response.status===201?'success':'error';
+      response.json().then(data=>{
+        setMessage({type,text:data.message})
+      })
+
+      type === 'success' && setFormData({
         name: "",
         companyName: "",
         phone: "",
         email: "",
         eventDate: "",
         eventType: "",
+        mealType: "",
         eventStartTime: "",
         numberOfPeople: "",
-        equipmentRequired: ""
+        remarks: ""
       });
-    })
-    .catch(error => {
-      console.error('Error:', error);
     });
-  };
+  }
 
   return (
     <>
@@ -85,26 +118,31 @@ export default function Booking() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-         <motion.div
+        <motion.div
           className="left-div"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-         <motion.form
+          <motion.form
             onSubmit={handleSubmit}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-              <motion.div
+            <motion.div
               className="form-group"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <label>Name</label>
-              <input type="text" name="name" value={formData.name} onChange={handleChange} />
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
             </motion.div>
             <motion.div
               className="form-group"
@@ -113,7 +151,12 @@ export default function Booking() {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <label>Company Name</label>
-              <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} />
+              <input
+                type="text"
+                name="companyName"
+                value={formData.companyName}
+                onChange={handleChange}
+              />
             </motion.div>
             <motion.div
               className="form-group"
@@ -122,7 +165,12 @@ export default function Booking() {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <label>Phone</label>
-              <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
+              <input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+              />
             </motion.div>
             <motion.div
               className="form-group"
@@ -131,7 +179,13 @@ export default function Booking() {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <label>Email</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
             </motion.div>
             <motion.div
               className="form-group"
@@ -140,7 +194,26 @@ export default function Booking() {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <label>Event Date</label>
-              <input type="date" name="eventDate" value={formData.eventDate} onChange={handleChange} />
+              <input
+                type="date"
+                name="eventDate"
+                value={formData.eventDate}
+                onChange={handleChange}
+              />
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <label>Event Start Time</label>
+              <input
+                type="time"
+                name="eventStartTime"
+                value={formData.eventStartTime}
+                onChange={handleChange}
+              />
             </motion.div>
           </motion.form>
         </motion.div>
@@ -150,20 +223,25 @@ export default function Booking() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-       <motion.form
+          <motion.form
             onSubmit={handleSubmit}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-              <motion.div
+            <motion.div
               className="form-group"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <label>Event Type</label>
-              <select name="eventType" value={formData.eventType} onChange={handleChange}>
+              <select
+                name="eventType"
+                value={formData.eventType}
+                onChange={handleChange}
+              >
+                <option value="" hidden></option>
                 <option value="wedding">Wedding</option>
                 <option value="gettogether">Get-Together</option>
                 <option value="birthday">Birthday</option>
@@ -179,10 +257,14 @@ export default function Booking() {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <label>Meal Type</label>
-              <select name="eventType" value={formData.eventType} onChange={handleChange}>
-                <option value="wedding">Lunch</option>
-                <option value="gettogether">Dinner</option>
-              
+              <select
+                name="mealType"
+                value={formData.mealType}
+                onChange={handleChange}
+              >
+                <option value="" hidden></option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
               </select>
             </motion.div>
             <motion.div
@@ -191,17 +273,14 @@ export default function Booking() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
-              <label>Event Start Time</label>
-              <input type="time" name="eventStartTime" value={formData.eventStartTime} onChange={handleChange} />
-            </motion.div>
-            <motion.div
-              className="form-group"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
               <label>Number of People</label>
-              <input type="number" name="numberOfPeople" value={formData.numberOfPeople} onChange={handleChange} />
+              <input
+                min={0}
+                type="number"
+                name="numberOfPeople"
+                value={formData.numberOfPeople}
+                onChange={handleChange}
+              />
             </motion.div>
             <motion.div
               className="form-group"
@@ -210,21 +289,38 @@ export default function Booking() {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <label>Equipment Required/Remarks</label>
-              <textarea name="equipmentRequired" value={formData.equipmentRequired} onChange={handleChange}></textarea>
+              <textarea
+                name="remarks"
+                value={formData.remarks}
+                onChange={handleChange}
+              ></textarea>
             </motion.div>
-            <motion.button
-              type="submit"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              transition={{ duration: 0.2 }}
-            >
-              Submit
-            </motion.button>
+
+            <motion.div style={{display:'flex',justifyContent:'space-between'}}>
+              <motion.p
+                style={{
+                  paddingTop: "10px",
+                  fontSize: "large",
+                  display: "flex",
+                  color: message.type === "error" ? "red" : "springgreen",
+                }}
+              >
+                {message.text}
+              </motion.p>
+
+              <motion.button
+                disabled={!formValid}
+                type="submit"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+              >
+                Submit
+              </motion.button>
+            </motion.div>
           </motion.form>
         </motion.div>
       </motion.div>
-
-   
     </>
   );
 }
