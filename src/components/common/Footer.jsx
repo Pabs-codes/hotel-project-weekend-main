@@ -1,4 +1,3 @@
-// Footer.js
 
 import React from "react";
 import "./Footer.css";
@@ -7,7 +6,7 @@ import "./Footer.css";
 import inst from "./ImagesP/instagram.png";
 import fb from "./ImagesP/facebook.png";
 import WA from "./ImagesP/Whatsapp.png";
-
+import YT from "./ImagesP/youtube.png"
 function handleClick(event) {
   event.preventDefault();
 }
@@ -122,6 +121,12 @@ function Footer() {
                 <p>
                     <a href="https://www.instagram.com/sunshinegrandlk" target="_blank" rel="noopener noreferrer">
                         <img src={inst} alt="Instagram" />
+                    </a>
+                </p>
+
+                <p>
+                    <a href="https://www.youtube.com/@sunshinefoodspvtltd5420" target="_blank" rel="noopener noreferrer">
+                        <img src={YT} alt="Youtube" />
                     </a>
                 </p>
             </div>

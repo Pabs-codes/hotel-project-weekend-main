@@ -60,8 +60,13 @@ export const socialIcons = [
   },
 
   {
+    icon: <i className="fab fa-whatsapp"></i>,
+    link: "https://wa.me/+94761064604",
+  },
+
+  {
     icon: <i className="fab fa-youtube"></i>,
-    link: "https://www.youtube.com",
+    link: "https://www.youtube.com/@sunshinefoodspvtltd5420",
   },
 ];
 
