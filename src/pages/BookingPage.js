@@ -17,6 +17,7 @@ import "./Form.css"; // Import the CSS file
 
 import { motion } from "framer-motion";
 
+const API_URL = "http://localhost/backend/";
 
 export default function Booking() {
   const [formValid, setFormValid] = useState(false); // This is the form validation state
@@ -31,7 +32,7 @@ export default function Booking() {
     eventType: "",
     eventStartTime: "",
     numberOfPeople: "",
-    equipmentRequired: ""
+    remarks: ""
   });
 
   const handleChange = (e) => {
@@ -49,13 +50,11 @@ export default function Booking() {
 
 
   const checkAvailability = async (value) => {
-    await fetch(`http://localhost:8000/reservation/availability?date=${value}`)
-    .then(response => {
-      const type = response.status===200?'success':'error';
-      setAvailability(response.status===200);
-      response.json().then(data=>{
-        setMessage({type,text:data.message})
-      })
+    await fetch(`${API_URL}check-availability.php?date=${value}`)
+    .then(response => response.json())
+    .then(data => {
+      setAvailability(data.status==='success')
+      setMessage({type:data.status,text:data.message})
     })
     .catch(err=>{
       setMessage({type:'error',text:'Error in checking availability'})
@@ -67,7 +66,6 @@ export default function Booking() {
     setFormValid(
       (formData.name !== '' &&
       formData.phone !== '' &&
-      formData.email !== '' && formData.email.includes('@') && formData.email.includes('.') &&
       formData.eventDate !== ''&&
       formData.eventType !== '' &&
       formData.eventStartTime !== '' &&
@@ -84,21 +82,20 @@ export default function Booking() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
   
-    fetch('http://localhost:8000/reservation', {
+    fetch(`${API_URL}add-reservation.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
     })
-    .then(response => {
-      const type = response.status===201?'success':'error';
-      response.json().then(data=>{
-        setMessage({type,text:data.message})
-      })
+    .then(response => response.json())
+    .then(data => {
+      setMessage({type:data.status,text:data.message});
 
-      type === 'success' && setFormData({
+      data.status === 'success' && setFormData({
         name: "",
         companyName: "",
         phone: "",
