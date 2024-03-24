@@ -14,13 +14,13 @@ export default function Book() {
                 <div className="row g-2">
                   <div className="col-md-3">
                     <div className="date" id="date1" data-target-input="nearest">
-                      <input
+                      {/* <input
                         type="text"
                         className="form-control datetimepicker-input"
                         placeholder="Check in"
                         data-target="#date1"
                         data-toggle="datetimepicker"
-                      />
+                      /> */}
                     </div>
                   </div>
                   <div className="col-md-3">
