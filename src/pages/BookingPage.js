@@ -58,6 +58,7 @@ export default function Booking() {
       })
     })
     .catch(err=>{
+      setMessage({type:'error',text:'Error in checking availability'})
       console.log(err)
     })
   }
