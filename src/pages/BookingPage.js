@@ -17,7 +17,7 @@ import "./Form.css"; // Import the CSS file
 
 import { motion } from "framer-motion";
 
-const API_URL = "http://sunshinegrand.lk/backend/";
+const API_URL = "https://sunshinegrand.lk/backend/";
 
 export default function Booking() {
   const [formValid, setFormValid] = useState(false); // This is the form validation state
@@ -50,6 +50,7 @@ export default function Booking() {
 
 
   const checkAvailability = async (value) => {
+    setMessage({type:'',text:''})
     await fetch(`${API_URL}check-availability.php?date=${value}`)
     .then(response => response.json())
     .then(data => {
