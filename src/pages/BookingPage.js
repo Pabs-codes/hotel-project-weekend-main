@@ -17,7 +17,7 @@ import "./Form.css"; // Import the CSS file
 
 import { motion } from "framer-motion";
 
-const API_URL = "http://localhost/backend/";
+const API_URL = "http://sunshinegrand.lk/backend/";
 
 export default function Booking() {
   const [formValid, setFormValid] = useState(false); // This is the form validation state
