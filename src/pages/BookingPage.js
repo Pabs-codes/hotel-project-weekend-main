@@ -56,7 +56,10 @@ export default function Booking() {
       response.json().then(data=>{
         setMessage({type,text:data.message})
       })
-    });
+    })
+    .catch(err=>{
+      console.log(err)
+    })
   }
 
   const checkForm =  () => {
