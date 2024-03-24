@@ -1,8 +1,24 @@
+// import React from "react";
+// import Heading from "../components/common/Heading";
+// import UC from "../components/common/UC";
+
+// export default function Booking() {
+//   return (
+//     <>
+//       <Heading heading="Booking" title="Home" subtitle="Booking" />
+//       <UC/>
+//     </>
+//   );
+// }
+
 import React, { useState } from "react";
 import Heading from "../components/common/Heading";
 import "./Form.css"; // Import the CSS file
 
 export default function Booking() {
+  const [formValid, setFormValid] = useState(false); // This is the form validation state
+  const [availability, setAvailability] = useState(false); // This is the availability state
+  const [message, setMessage] = useState({type:'',text:''}); // This is the message from the server
   const [formData, setFormData] = useState({
     name: "",
     companyName: "",
@@ -23,110 +39,135 @@ export default function Booking() {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: value
     });
-    // Reset date availability when the date changes
-    setDateAvailable(true);
-  };
+  }; 
+ 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // You can handle form submission logic here
+  //   console.log(formData);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Check if date is available (replace this with your own logic)
-    const isDateAvailable = checkDateAvailability(formData.eventDate);
-
-    if (!isDateAvailable) {
-      setDateAvailable(false);
-      return; // Don't submit the form if date is not available
-    }
-
-    fetch("http://192.168.43.155:8000/reservation", {
-      method: "POST",
+  
+    fetch('http://localhost:5000/submit', {
+      method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.text())
-      .then((data) => {
-        setMessage(JSON.parse(data).message)
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+      // Optionally, you can reset the form data here
+      setFormData({
+        name: "",
+        companyName: "",
+        phone: "",
+        email: "",
+        eventDate: "",
+        eventType: "",
+        eventStartTime: "",
+        numberOfPeople: "",
+        equipmentRequired: ""
       });
-  };
-
-  // Function to check date availability (replace this with your own logic)
-  const checkDateAvailability = (date) => {
-    // Example: Check if date is within a range or available in a database
-    return true; // Return true if date is available, false otherwise
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   };
 
   return (
     <>
       <Heading heading="Booking" title="Home" subtitle="Booking" />
-      <div className="booking-form">
-        <div className="left-div">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
+      <motion.div
+        className="booking-form"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+         <motion.div
+          className="left-div"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+         <motion.form
+            onSubmit={handleSubmit}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+              <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
+              <input type="text" name="name" value={formData.name} onChange={handleChange} />
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Company Name</label>
-              <input
-                type="text"
-                name="companyName"
-                value={formData.companyName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
+              <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} />
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Phone</label>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
+              <input type="text" name="phone" value={formData.phone} onChange={handleChange} />
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
+              <input type="email" name="email" value={formData.email} onChange={handleChange} />
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Event Date</label>
-              <input
-                type="date"
-                name="eventDate"
-                value={formData.eventDate}
-                onChange={handleChange}
-              />
-              {!dateAvailable && (
-                <small className="text-danger">Date not available</small>
-              )}
-            </div>
-          </form>
-        </div>
-        <div className="right-div">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
+              <input type="date" name="eventDate" value={formData.eventDate} onChange={handleChange} />
+            </motion.div>
+          </motion.form>
+        </motion.div>
+        <motion.div
+          className="right-div"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+       <motion.form
+            onSubmit={handleSubmit}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+              <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Event Type</label>
-              <select
-                name="eventType"
-                value={formData.eventType}
-                onChange={handleChange}
-              >
+              <select name="eventType" value={formData.eventType} onChange={handleChange}>
                 <option value="wedding">Wedding</option>
                 <option value="gettogether">Get-Together</option>
                 <option value="birthday">Birthday</option>
@@ -136,49 +177,52 @@ export default function Booking() {
             </div>
             <div className="form-group">
               <label>Meal Type</label>
-              <select
-                name="mealType"
-                value={formData.mealType}
-                onChange={handleChange}
-              >
-                <option value="lunch">Lunch</option>
-                <option value="dinner">Dinner</option>
+              <select name="eventType" value={formData.eventType} onChange={handleChange}>
+                <option value="wedding">Lunch</option>
+                <option value="gettogether">Dinner</option>
+              
               </select>
-            </div>
-            <div className="form-group">
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Event Start Time</label>
-              <input
-                type="time"
-                name="eventStartTime"
-                value={formData.eventStartTime}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
+              <input type="time" name="eventStartTime" value={formData.eventStartTime} onChange={handleChange} />
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Number of People</label>
-              <input
-                type="number"
-                name="numberOfPeople"
-                value={formData.numberOfPeople}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
+              <input type="number" name="numberOfPeople" value={formData.numberOfPeople} onChange={handleChange} />
+            </motion.div>
+            <motion.div
+              className="form-group"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <label>Equipment Required/Remarks</label>
-              <textarea
-                name="equipmentRequired"
-                value={formData.equipmentRequired}
-                onChange={handleChange}
-              ></textarea>
-            </div>
-            <button type="submit">Submit</button>
-         
-            <span style={{ marginLeft:'20px' , fontSize: 'smaller', color: 'Yellow', fontStyle: 'italic' }}> Submission Successful ! {message}</span>
+              <textarea name="equipmentRequired" value={formData.equipmentRequired} onChange={handleChange}></textarea>
+            </motion.div>
+            <motion.button
+              type="submit"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+            >
+              Submit
+            </motion.button>
+          </motion.form>
+        </motion.div>
+      </motion.div>
 
-
-          </form>
-        </div>
-      </div>
+   
     </>
   );
 }
