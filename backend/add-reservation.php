@@ -7,8 +7,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Read the JSON input from the request body
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Create a new Reservation object
-    $success = new Reservation($conn).create($data);
+    // Check if the required fields are present in the request
+    if (!isset($data["name"]) || !isset($data["phone"]) || !isset($data["eventDate"]) || !isset($data["eventStartTime"]) || !isset($data["eventType"]) || !isset($data["mealType"]) || !isset($data["noOfPeople"])) {
+        $response = [
+            "status" => "error",
+            "message" => "Required fields are missing."
+        ];
+
+        // Send the response as JSON
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        exit;
+    }
+
+    //Create a new Reservation object
+    $reservation = new Reservation($conn);
+    $success = $reservation->create($data);
 
     // Check if the data was inserted successfully
     if ($success) {
@@ -40,4 +54,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     echo json_encode($response);
 }
 
-?>

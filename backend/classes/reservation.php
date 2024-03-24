@@ -4,16 +4,16 @@ class Reservation{
     private $conn;
     private $table_name = "reservation";
 
-    public $id;
-    public $name;
-    public $company_name;
-    public $phone;
-    public $email;
-    public $date_time
-    public $event_type;
-    public $meal_type;
-    public $count;
-    public $remarks;
+    private $id;
+    private $name;
+    private $company_name;
+    private $phone;
+    private $email;
+    private $date_time;
+    private $event_type;
+    private $meal_type;
+    private $count;
+    private $remarks;
 
     public function __construct($db)
     {
@@ -22,21 +22,22 @@ class Reservation{
 
     public function create($data)
     {
-        $query = "INSERT INTO " . $this->table_name . " (name, company_name, phone, email, date_time, event_type, meal_type, count, remarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO " . $this->table_name . " (name, company_name, phone, email, date_time, event_type, meal_type, count, remarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
 
-        $this->name = htmlspecialchars(strip_tags($data->name));
-        $this->company_name = htmlspecialchars(strip_tags($data->companyName));
-        $this->phone = htmlspecialchars(strip_tags($data->phone));
-        $this->email = htmlspecialchars(strip_tags($data->email));
-        $this->date_time = htmlspecialchars(strip_tags($data->eventDate))." ".htmlspecialchars(strip_tags($this->eventStartTime));
-        $this->event_type = htmlspecialchars(strip_tags($data->eventType));
-        $this->meal_type = htmlspecialchars(strip_tags($data->mealType));
-        $this->count = htmlspecialchars(strip_tags($data->numberOfPeople));
-        $this->remarks = htmlspecialchars(strip_tags($data->remarks));
+        $this->name = $data['name'];
+        $this->company_name = isset($data['companyName']) ? $data['companyName'] : null;
+        $this->phone = $data['phone'];
+        $this->email = isset($data['email']) ? $data['email'] : null;
+        $this->date_time = $data['eventDate']." ".$data['eventStartTime'];
+        $this->event_type = $data['eventType'];
+        $this->meal_type = $data['mealType'];
+        $this->count = $data['noOfPeople'];
+        $this->remarks = isset($data['remarks']) ? $data['remarks'] : null;
 
-        $stmt->bind_param($this->name, $this->company_name, $this->phone, $this->email, $this->date_time, $this->event_type, $this->meal_type, $this->count, $this->remarks);
+
+        $stmt->bind_param("sssssssss", $this->name, $this->company_name, $this->phone, $this->email, $this->date_time, $this->event_type, $this->meal_type, $this->count, $this->remarks);
 
         if ($stmt->execute()) {
             return true;
@@ -45,15 +46,15 @@ class Reservation{
         return false;
     }
 
-    public function checkAvailability($data)
-    {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE date_time LIKE ?%";
+    public function checkAvailability($data){
+
+        $query = "SELECT * FROM " . $this->table_name . " WHERE date_time LIKE ?";
 
         $stmt = $this->conn->prepare($query);
 
-        $this->date = htmlspecialchars(strip_tags($data->date))
+        $date = $data['date']."%";
 
-        $stmt->bind_param($this->date);
+        $stmt->bind_param("s", $date);
 
         $stmt->execute();
 
