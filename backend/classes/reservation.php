@@ -33,7 +33,7 @@ class Reservation{
         $this->date_time = $data['eventDate']." ".$data['eventStartTime'];
         $this->event_type = $data['eventType'];
         $this->meal_type = $data['mealType'];
-        $this->count = $data['noOfPeople'];
+        $this->count = $data['numberOfPeople'];
         $this->remarks = isset($data['remarks']) ? $data['remarks'] : null;
 
 

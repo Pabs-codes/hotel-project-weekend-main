@@ -2,6 +2,10 @@
 require_once "./utils/db-connect.php";
 require_once "./classes/reservation.php";
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
 

@@ -2,13 +2,17 @@
 require_once "./utils/db-connect.php";
 require_once "./classes/reservation.php";
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Read the JSON input from the request body
     $data = json_decode(file_get_contents("php://input"), true);
 
     // Check if the required fields are present in the request
-    if (!isset($data["name"]) || !isset($data["phone"]) || !isset($data["eventDate"]) || !isset($data["eventStartTime"]) || !isset($data["eventType"]) || !isset($data["mealType"]) || !isset($data["noOfPeople"])) {
+    if (!isset($data["name"]) || !isset($data["phone"]) || !isset($data["eventDate"]) || !isset($data["eventStartTime"]) || !isset($data["eventType"]) || !isset($data["mealType"]) || !isset($data["numberOfPeople"])) {
         $response = [
             "status" => "error",
             "message" => "Required fields are missing."
