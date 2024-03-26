@@ -1,8 +1,8 @@
 <?php
 $SUPERKEY = "5up3r53cr3tK3y";
 
-require_once "./models/user.php";
-require_once "./utils/db-connect.php";
+require_once "../models/user.php";
+require_once "../utils/db-connect.php";
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
