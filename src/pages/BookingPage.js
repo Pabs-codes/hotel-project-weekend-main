@@ -17,7 +17,12 @@ import "./Form.css"; // Import the CSS file
 
 import { motion } from "framer-motion";
 
-const API_URL = "https://api.sunshinegrand.lk/";
+//fetching the API URL from config.json
+let API_URL = '';
+fetch('config.json')
+.then(response => response.json())
+.then(data => {API_URL = data.API_URL})
+.catch(err=>console.log(err))
 
 export default function Booking() {
   const [formValid, setFormValid] = useState(false); // This is the form validation state
