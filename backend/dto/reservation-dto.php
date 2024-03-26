@@ -18,8 +18,8 @@ class ReservationDto{
         $this->companyName = isset($data['company_name']) ? $data['company_name'] : null;
         $this->phone = $data['phone'];
         $this->email = isset($data['email']) ? $data['email'] : null;
-        $this->eventDate = $data['date_time'].substr(0, 10);
-        $this->eventStartTime = $data['date_time'].substr(11, 8);
+        $this->eventDate = explode(' ',$data['date_time'])[0];
+        $this->eventStartTime = explode(' ',$data['date_time'])[1];
         $this->eventType = $data['event_type'];
         $this->mealType = $data['meal_type'];
         $this->numberOfPeople = $data['count'];
