@@ -66,4 +66,30 @@ class Reservation{
 
         return true;
     }
+
+    public function getAllReservations(){
+        $query = "SELECT * FROM " . $this->table_name;
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function deleteReservation($id){
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bind_param("i", $id);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
 }

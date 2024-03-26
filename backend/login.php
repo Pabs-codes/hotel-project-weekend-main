@@ -1,21 +1,23 @@
 <?php
 require_once "./utils/db-connect.php";
-require_once "./models/reservation.php";
+require_once "./models/user.php";
+require_once "./utils/token-manager.php";
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+
 // Check if the request method is POST
-if ($_SERVER["REQUEST_METHOD"] === "GET") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Read the JSON input from the request body
+    $data = json_decode(file_get_contents("php://input"), true);
 
-    // Read the query input from the request params
-    $data = $_GET;
-
-    if (!isset($data["date"])){
+    // Check if the required fields are present in the request
+    if (!isset($data["email"]) || !isset($data["password"])) {
         $response = [
             "status" => "error",
-            "message" => "Date is required"
+            "message" => "Required fields are missing."
         ];
 
         // Send the response as JSON
@@ -24,22 +26,23 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         exit;
     }
 
-    //check date availability
-    $reservation = new Reservation($conn);
-    $success = $reservation->checkAvailability($data);
+    //Create a new User object
+    $user = new User($conn);
+    $success = $user->validateCredentials($data["email"], $data["password"]);
 
     // Check if the data was inserted successfully
     if ($success) {
+        header("Authorization: Bearer " . generateToken() . "\r\n");
         // If data insertion is successful
         $response = [
             "status" => "success",
-            "message" => "Date is available"
+            "message" => "Login successful."
         ];
     } else {
         // If an error occurs during data insertion
         $response = [
             "status" => "error",
-            "message" => "Date is not available"
+            "message" => "Invalid credentials."
         ];
     }
 
@@ -57,4 +60,3 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     header("Content-Type: application/json");
     echo json_encode($response);
 }
-

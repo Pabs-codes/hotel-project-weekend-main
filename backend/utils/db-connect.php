@@ -15,14 +15,14 @@
     }
 
     // create database if not exists
-    $sql = "CREATE DATABASE IF NOT EXISTS hotel";
+    $sql = "CREATE DATABASE IF NOT EXISTS $dbname";
     if ($conn->query($sql) === TRUE) {
         $conn->select_db($dbname);
     } else {
         echo "Error creating database: " . $conn->error;
     }
 
-    // sql to create table
+    // sql to create tables
     $sql = "CREATE TABLE IF NOT EXISTS reservation (
         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(50) NOT NULL,
@@ -34,10 +34,15 @@
         meal_type VARCHAR(10) NOT NULL,
         count INT(4) NOT NULL,
         remarks TEXT
+    );
+    CREATE TABLE IF NOT EXISTS user (
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(50) NOT NULL,
+        password VARCHAR(50) NOT NULL
     )";
 
     if ($conn->query($sql) === TRUE) {
-        // echo "Table reservation created successfully";
+        // echo "Tables created successfully";
     } else {
         echo "Error creating table: " . $conn->error;
     }

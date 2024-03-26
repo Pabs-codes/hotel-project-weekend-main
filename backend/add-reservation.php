@@ -1,6 +1,6 @@
 <?php
 require_once "./utils/db-connect.php";
-require_once "./classes/reservation.php";
+require_once "./models/reservation.php";
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET");
