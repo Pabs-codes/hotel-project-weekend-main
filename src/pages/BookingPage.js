@@ -18,10 +18,10 @@ import "./Form.css"; // Import the CSS file
 import { motion } from "framer-motion";
 
 //fetching the API URL from config.json
-let API_URL = '';
+let api_url = '';
 fetch('config.json')
 .then(response => response.json())
-.then(data => {API_URL = data.API_URL})
+.then(data => {api_url = data.API_URL})
 .catch(err=>console.log(err))
 
 export default function Booking() {
@@ -56,7 +56,7 @@ export default function Booking() {
 
   const checkAvailability = async (value) => {
     setMessage({type:'',text:''})
-    await fetch(`${API_URL}check-availability.php?date=${value}`)
+    await fetch(`${api_url}check-availability.php?date=${value}`)
     .then(response => response.json())
     .then(data => {
       setAvailability(data.status==='success')
@@ -90,7 +90,7 @@ export default function Booking() {
     e.preventDefault();
     console.log(formData);
   
-    fetch(`${API_URL}add-reservation.php`, {
+    fetch(`${api_url}add-reservation.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
