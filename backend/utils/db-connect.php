@@ -2,9 +2,9 @@
 // Function to establish a connection to the database
 
 $servername = "localhost";
-$username = "root";
+$username = "dbsunshinegra";
 $password = "cccc";
-$dbname = "hotel";
+$dbname = "dbsunshinegra";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password);
