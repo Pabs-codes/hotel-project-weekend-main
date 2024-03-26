@@ -1,11 +1,14 @@
 <?php
-require_once "./utils/db-connect.php";
-require_once "./models/user.php";
-require_once "./utils/token-manager.php";
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Expose-Headers: Authorization");
+
+
+require_once "../utils/db-connect.php";
+require_once "../models/user.php";
+require_once "../utils/token-manager.php";
 
 
 // Check if the request method is POST
@@ -14,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
 
     // Check if the required fields are present in the request
-    if (!isset($data["email"]) || !isset($data["password"])) {
+    if (!isset($data["user"]) || !isset($data["pass"])) {
         $response = [
             "status" => "error",
             "message" => "Required fields are missing."
@@ -28,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     //Create a new User object
     $user = new User($conn);
-    $success = $user->validateCredentials($data["email"], $data["password"]);
+    $success = $user->validateCredentials($data["user"], $data["pass"]);
 
     // Check if the data was inserted successfully
     if ($success) {

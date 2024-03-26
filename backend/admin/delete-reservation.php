@@ -1,20 +1,25 @@
 <?php
-require_once "./utils/db-connect.php";
-require_once "./models/reservation.php";
-require_once "./utils/token-manager.php";
-
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Methods: DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+
+require_once "../utils/db-connect.php";
+require_once "../models/reservation.php";
+require_once "../utils/token-manager.php";
+
 
 // Check if the request method is DELETE
 if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
     
     // Check if the token is present in the request headers
-    if (!isset($_SERVER["HTTP_AUTHORIZATION"])) {
+    $headers = getallheaders();
+
+    // Check if the token is present in the request headers
+    if (!isset($headers["Authorization"])) {
         $response = [
             "status" => "error",
-            "message" => "Authorization Token is required."
+            "message" => "Authorization token is required."
         ];
 
         // Send the response as JSON
@@ -24,13 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
     }
 
     // Validate the token
-    $token = $_SERVER["HTTP_AUTHORIZATION"];
+    $token = explode(" ", $headers["Authorization"])[1];
     $isValid = validateToken($token);
 
     if (!$isValid) {
         $response = [
-            "status" => "error",
-            "message" => "Token expired, please login again."
+            "status" => "expired",
+            "message" => "Session expired, please login again."
         ];
 
         // Send the response as JSON
@@ -56,14 +61,14 @@ if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
 
     //delete reservation
     $reservation = new Reservation($conn);
-    $success = $reservation->deleteReservation($data);
+    $success = $reservation->deleteReservation($data["id"]);
 
-    // Check if the data was inserted successfully
+    // Check if the data was deleted successfully
     if ($success) {
-        // If data insertion is successful
+        // If data deletion is successful
         $response = [
             "status" => "success",
-            "message" => "Reservation deleted successfully"
+            "message" => "Reservation deleted successfully",
         ];
     } else {
         // If an error occurs during data insertion

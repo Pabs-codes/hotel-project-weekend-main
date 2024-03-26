@@ -5,7 +5,7 @@ class User{
     private $table_name = "user";
 
     private $id;
-    private $email;
+    private $username;
     private $password;
 
     public function __construct($db)
@@ -13,13 +13,29 @@ class User{
         $this->conn = $db;
     }
 
-    public function validateCredentials($email, $password)
+    public function create($username, $password)
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE email = ? AND password = ?";
+        $query = "INSERT INTO " . $this->table_name . " (username, password) VALUES (?, ?)";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bind_param("ss", $email, $password);
+        $stmt->bind_param("ss", $username, $password);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+    
+
+    public function validateCredentials($username, $password)
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE username = ? AND password = ?";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bind_param("ss", $username, $password);
 
         $stmt->execute();
 

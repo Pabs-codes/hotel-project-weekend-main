@@ -1,5 +1,6 @@
 <?php
 class ReservationDto{
+    public $id;
     public $name;
     public $companyName;
     public $phone;
@@ -12,6 +13,7 @@ class ReservationDto{
     public $remarks;
 
     public function __construct($data){
+        $this->id = $data['id'];
         $this->name = $data['name'];
         $this->companyName = isset($data['company_name']) ? $data['company_name'] : null;
         $this->phone = $data['phone'];
